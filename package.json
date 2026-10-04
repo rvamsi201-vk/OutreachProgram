@@ -1,0 +1,29 @@
+{
+  "name": "ai-crm",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI Outreach CRM - Multi-tenant platform for lead management and AI-powered outreach",
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "db:generate": "pnpm --filter @ai-crm/api db:generate",
+    "db:migrate": "pnpm --filter @ai-crm/api db:migrate",
+    "db:seed": "pnpm --filter @ai-crm/api db:seed",
+    "db:studio": "pnpm --filter @ai-crm/api db:studio",
+    "clean": "pnpm -r clean"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.11.0",
+    "globals": "^17.12.0",
+    "typescript-eslint": "^8.71.0"
+  }
+}

@@ -1,0 +1,17 @@
+node_modules
+**/node_modules
+dist
+**/dist
+coverage
+**/*.tsbuildinfo
+.env
+.env.production
+.git
+backups
+uploads
+apps/api/uploads
+Baileys-clone
+baileys-session
+auth_info_baileys
+*.log
+*.tsbuildinfo

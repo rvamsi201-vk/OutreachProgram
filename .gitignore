@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.production
+.env.development
+.env.test
+.env.*.local
+
+# Runtime data
+apps/api/uploads/
+uploads/
+Baileys-clone/
+baileys-session/
+auth_info_baileys/
+
+# IDE
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Testing
+coverage/
+
+# Docker
+docker-data/
+
+# Drizzle
+drizzle/meta/
+
+# Misc
+*.tgz
+.cache/

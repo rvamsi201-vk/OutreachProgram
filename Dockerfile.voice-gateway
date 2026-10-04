@@ -1,0 +1,22 @@
+FROM node:20-alpine AS deps
+WORKDIR /app
+RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY apps/voice-gateway/package.json apps/voice-gateway/package.json
+RUN pnpm install --frozen-lockfile
+
+FROM deps AS build
+COPY . .
+RUN pnpm --filter @ai-crm/voice-gateway build
+
+FROM node:20-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production
+RUN corepack enable
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/apps/voice-gateway/node_modules ./apps/voice-gateway/node_modules
+COPY --from=build /app/apps/voice-gateway/dist ./apps/voice-gateway/dist
+COPY package.json pnpm-workspace.yaml ./
+COPY apps/voice-gateway/package.json apps/voice-gateway/package.json
+EXPOSE 3100
+CMD ["pnpm", "--filter", "@ai-crm/voice-gateway", "start"]

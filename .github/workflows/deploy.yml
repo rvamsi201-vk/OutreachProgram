@@ -1,0 +1,79 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: ai_crm_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/ai_crm_test
+      REDIS_URL: redis://localhost:6379
+      POSTGRES_DB: ai_crm_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      VITE_API_URL: http://localhost:3000
+      JWT_SECRET: ci-test-jwt-secret-that-is-at-least-32-chars
+      REFRESH_SECRET: ci-test-refresh-secret-at-least-32-chars
+      ENCRYPTION_KEY: ci-test-encryption-key-that-is-at-least-32-chars
+      APP_URL: http://localhost:5173
+      NODE_ENV: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - run: cp .env.production.example .env.production
+      - run: docker compose -f docker-compose.prod.yml build
+
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.HOSTINGER_HOST }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          script: |
+            set -e
+            cd ${{ secrets.HOSTINGER_APP_DIR }}
+            git pull --ff-only
+            docker compose -f docker-compose.prod.yml build
+            docker compose -f docker-compose.prod.yml run --rm api pnpm --filter @ai-crm/api db:migrate:prod
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans

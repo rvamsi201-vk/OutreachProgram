@@ -1,0 +1,10 @@
+export { authRoutes } from './auth.routes.js';
+export { healthRoutes } from './health.routes.js';
+export { teamRoutes, memberRoutes } from './team.routes.js';
+export { leadRoutes } from './lead.routes.js';
+export { conversationRoutes } from './conversation.routes.js';
+export { campaignRoutes, channelAccountRoutes, webhookRoutes } from './campaign.routes.js';
+export { aiRoutes } from './ai.routes.js';
+export { voiceInternalRoutes } from './voice.routes.js';
+export { salesRoutes, realtimeRoutes } from './sales.routes.js';
+export { integrationRoutes } from './integration.routes.js';

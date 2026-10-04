@@ -1,0 +1,76 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1790740833011,
+      "tag": "0000_cold_black_panther",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1790741979361,
+      "tag": "0001_fresh_leech",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790743299624,
+      "tag": "0002_concerned_matthew_murdock",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790744595604,
+      "tag": "0003_glossy_kitty_pryde",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1790746000000,
+      "tag": "0004_phase6_rls",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1790756000000,
+      "tag": "0005_phase7_integrations_voice",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1790760000000,
+      "tag": "0006_lead_enrichment_import_mapping",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1790763000000,
+      "tag": "0007_lead_batches_comments_filters",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1790766000000,
+      "tag": "0008_reusable_campaign_runs",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790769000000,
+      "tag": "0009_baileys_whatsapp_sessions",
+      "breakpoints": true
+    }
+  ]
+}
